@@ -1,5 +1,5 @@
 
-function catchPokemons(direction) {
+function catchPokemons(strDirection) {
   let ash = {
     position: {
       x: 0,
@@ -17,9 +17,9 @@ function catchPokemons(direction) {
   };
 
   let pokemons = 0;
-  for (let i = 0; i < direction.length; i++) {
+  for (let i = 0; i < strDirection.length; i++) {
     let direction;
-    switch (direction[i]) {
+    switch (strDirection[i]) {
       case "w":
         direction = "West";
         ash.position.x -= 1;
@@ -84,15 +84,19 @@ function printPokemons(ash) {
   console.log(`Pokemons: ${ash.totalPokemons}`);
 }
 
-const $button = document.querySelector("button");
-$button.addEventListener("click", (event) => {
+const button = document.querySelector("button");
+button.addEventListener("click", (event) => {
 
 let movements = document.getElementById("movements-input").value;
 let result = catchPokemons(movements);
 
 
 
-document.getElementById("requested-movements").innerHTML = movements
-document.getElementById("total-pokemons").innerHTML = result.totalPokemons;
+document.getElementById("requested-movements").innerHTML = `<p>Movements:${movements}</p>`
+document.getElementById("total-pokemons").innerHTML = `<p>Catched Pokemons:${result.totalPokemons}</p>`;
 
-});
+
+
+}
+
+);
