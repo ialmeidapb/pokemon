@@ -1,6 +1,6 @@
 
-function catchPokemons(strDirection) {
-  let character = {
+function catchPokemons(direction) {
+  let ash = {
     position: {
       x: 0,
       y: 0,
@@ -17,48 +17,48 @@ function catchPokemons(strDirection) {
   };
 
   let pokemons = 0;
-  for (let i = 0; i < strDirection.length; i++) {
+  for (let i = 0; i < direction.length; i++) {
     let direction;
-    switch (strDirection[i]) {
+    switch (direction[i]) {
       case "w":
         direction = "West";
-        character.position.x -= 1;
+        ash.position.x -= 1;
         break;
       case "e":
         direction = "East";
-        character.position.x += 1;
+        ash.position.x += 1;
         break;
       case "n":
         direction = "North";
-        character.position.y += 1;
+        ash.position.y += 1;
         break;
       case "s":
         direction = "South";
-        character.position.y -= 1;
+        ash.position.y -= 1;
         break;
     }
 
     let pokemonsInCoordinate = 0;
     if (
-      !existsCoordinateInTravelLog(character.travelLog, character.position.x, character.position.y)
+      !existsCoordinateInTravelLog(ash.travelLog, ash.position.x, ash.position.y)
     ) {
       pokemonsInCoordinate = 1;
     }
 
     let log = {
       direction: direction,
-      x: character.position.x,
-      y: character.position.y,
+      x: ash.position.x,
+      y: ash.position.y,
       pokemons: pokemonsInCoordinate,
     };
 
-    character.totalPokemons += pokemonsInCoordinate;
+    ash.totalPokemons += pokemonsInCoordinate;
 
-    character.travelLog.push(log);
+    ash.travelLog.push(log);
   }
 
 
-  return character;
+  return ash;
 }
 
 //verify if ash already passed that possition
@@ -71,15 +71,28 @@ function printCoordinate(coord) {
   console.log(`coord: [x:${coord.x}, y:${coord.y}]`);
 }
 
-function printTravelLog(character) {
-  for (let i = 0; i < character.travelLog.length; i++) {
-    let log = character.travelLog[i];
+function printTravelLog(ash) {
+  for (let i = 0; i < ash.travelLog.length; i++) {
+    let log = ash.travelLog[i];
     console.log(
       `Movement ${i}: [direction:${log.direction}, x:${log.x}, y:${log.y}, pokemon:${log.pokemons}],`
     );
   }
 }
 
-function printPokemons(character) {
-  console.log(`Pokemons: ${character.totalPokemons}`);
+function printPokemons(ash) {
+  console.log(`Pokemons: ${ash.totalPokemons}`);
 }
+
+const $button = document.querySelector("button");
+$button.addEventListener("click", (event) => {
+
+let movements = document.getElementById("movements-input").value;
+let result = catchPokemons(movements);
+
+
+
+document.getElementById("requested-movements").innerHTML = movements
+document.getElementById("total-pokemons").innerHTML = result.totalPokemons;
+
+});
